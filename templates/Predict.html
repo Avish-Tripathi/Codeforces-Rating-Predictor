@@ -26,6 +26,7 @@
 </style>
 
 <body style="background-image: -webkit-linear-gradient(0deg, white 15%,#568ded 90%) !important;">
+    <!-- Navigation Bar -->
     <section class="navigation-section">
         <nav class="navbar navbar-expand-lg navbar-light bg-light navigation-color">
             <div class="container-fluid">
@@ -44,16 +45,19 @@
             </div>
         </nav>
     </section>
+    <!-- Predict Section -->
     <section class="form">
         <form action="/predict" method="post">
             <input type="text" placeholder="Codeforces UserHandle" name="handle">
         </form>
     </section>
     <div class="text">
+        <!-- User not found -->
         {% if name=='failed' %}
         <h1>Handle Not Found!!</h1>
+        <!-- Solved 0 problems and contests -->
         {% elif problems==0 and name!='' %}
-        <h1>Useless People</h1>
+        <h1>Not solved any problem yet!</h1>
         {% elif name!='' %}
         <h1 class="handle">{{name}}</h1>
         <div class="container">
