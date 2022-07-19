@@ -18,8 +18,9 @@ df.describe()
 
 df.info()
 
-# DELETING THE 'HANDLE' COLUMN FROM THE DATASET
+# DELETING THE 'HANDLE & FRIENDS_COUNT' COLUMN FROM THE DATASET
 df=df.drop("handle",axis=1)
+df=df.drop("friends_count",axis=1)
 df.head()
 
 # # Visualizing the data
@@ -149,22 +150,34 @@ df
 # ## Random Forest
 
 X=df.iloc[:,:-1].values
-Y=df.iloc[:,4]
+Y=df.iloc[:,3]
 Y
 
 from sklearn.model_selection import train_test_split
 x_train,x_test,y_train,y_test,=train_test_split(X,Y,test_size=1/3,random_state=0)
 
-from sklearn.ensemble import RandomForestRegressor
-regressor=RandomForestRegressor(n_estimators=300,random_state=0)
-regressor.fit(x_train,y_train)
-ans=regressor.predict(x_test)
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+x_train = sc.fit_transform(x_train)
+x_test = sc.transform(x_test)
 
-from sklearn import metrics
 
-print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, ans))
-print('Mean Squared Error:', metrics.mean_squared_error(y_test, ans))
-print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, ans)))
+# Fitting Linear Regression to the dataset
+from sklearn.linear_model import LinearRegression
+lin = LinearRegression()
+ 
+lin.fit(x_train, y_train)
+
+# Fitting Polynomial Regression to the dataset
+from sklearn.preprocessing import PolynomialFeatures
+
+poly = PolynomialFeatures(degree = 2)
+X_poly = poly.fit_transform(x_train)
+
+from sklearn import linear_model
+regression = linear_model.LinearRegression()
+model = regression.fit(x_train, y_train)
+score = model.score(x_test, y_test)
 
 
 pickle.dump(regressor,open('model.pkl','wb'))
