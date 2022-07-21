@@ -61,7 +61,7 @@ def predict():
         prediction=model.predict(final_features)
         
         
-    return render_template("Predict.html", problems=len(problems), name=handle, maxRating=maxRating, maxRank=maxRank, friendsCount=friendsCount, currRating=currRating, contests = con, photo = photo,ans=int(currRating+prediction))
+    return render_template("Predict.html", problems=len(problems), name=handle, maxRating=maxRating, maxRank=maxRank, friendsCount=friendsCount, currRating=currRating, contests = con, photo = photo, ans = int(currRating + prediction))
 
 
 if __name__ == '__main__':
